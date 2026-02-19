@@ -1,10 +1,11 @@
 import { Router } from 'express';
 import { protect } from '../middleware/auth.middleware';
+import { getSettings, updateSettings } from '../controllers/settings.controller';
 
 const router = Router();
 router.use(protect);
 
-router.get('/', (req, res) => res.json({ success: true, data: {} }));
-router.put('/', (req, res) => res.json({ success: true, message: 'Updated' }));
+router.get('/', getSettings);
+router.put('/', updateSettings);
 
 export default router;

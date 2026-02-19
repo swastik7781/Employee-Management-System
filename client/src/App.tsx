@@ -9,6 +9,12 @@ import LeavePage from './pages/LeavePage';
 import PayrollPage from './pages/PayrollPage';
 import PerformancePage from './pages/PerformancePage';
 import SettingsPage from './pages/SettingsPage';
+import ReportsPage from './pages/ReportsPage';
+
+function ProtectedRoute({ children }: { children: React.ReactNode }) {
+    const { isAuthenticated } = useAuthStore();
+    return isAuthenticated ? <>{children}</> : <Navigate to="/login" replace />;
+}
 
 function App() {
     const { isAuthenticated } = useAuthStore();
@@ -17,24 +23,29 @@ function App() {
         <Routes>
             <Route
                 path="/login"
-                element={!isAuthenticated ? <LoginPage /> : <Navigate to="/dashboard" />}
+                element={!isAuthenticated ? <LoginPage /> : <Navigate to="/dashboard" replace />}
             />
 
             <Route
                 path="/"
-                element={isAuthenticated ? <DashboardLayout /> : <Navigate to="/login" />}
+                element={
+                    <ProtectedRoute>
+                        <DashboardLayout />
+                    </ProtectedRoute>
+                }
             >
-                <Route index element={<Navigate to="/dashboard" />} />
+                <Route index element={<Navigate to="/dashboard" replace />} />
                 <Route path="dashboard" element={<Dashboard />} />
                 <Route path="employees" element={<EmployeesPage />} />
                 <Route path="attendance" element={<AttendancePage />} />
                 <Route path="leaves" element={<LeavePage />} />
                 <Route path="payroll" element={<PayrollPage />} />
                 <Route path="performance" element={<PerformancePage />} />
+                <Route path="reports" element={<ReportsPage />} />
                 <Route path="settings" element={<SettingsPage />} />
             </Route>
 
-            <Route path="*" element={<Navigate to="/dashboard" />} />
+            <Route path="*" element={<Navigate to={isAuthenticated ? "/dashboard" : "/login"} replace />} />
         </Routes>
     );
 }

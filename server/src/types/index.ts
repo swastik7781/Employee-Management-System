@@ -19,6 +19,19 @@ export interface IUser extends Document {
     resetPasswordExpire?: Date;
     createdAt: Date;
     updatedAt: Date;
+    preferences?: {
+        theme?: 'light' | 'dark' | 'system';
+        notifications?: {
+            email: boolean;
+            inApp: boolean;
+            leaves: boolean;
+            payroll: boolean;
+            attendance: boolean;
+            performance: boolean;
+            announcements: boolean;
+        };
+        sidebarExpanded?: boolean;
+    };
     comparePassword(enteredPassword: string): Promise<boolean>;
     generateAuthToken(): string;
     generateRefreshToken(): string;
@@ -437,7 +450,7 @@ export interface IAsset extends Document {
     category: string;
     type: string;
     brand?: string;
-    model?: string;
+    modelName?: string;
     serialNumber?: string;
     purchaseDate: Date;
     purchasePrice: number;

@@ -1,10 +1,11 @@
 import { Router } from 'express';
 import { protect } from '../middleware/auth.middleware';
+import { getDashboardStats, getHeadcountTrend } from '../controllers/report.controller';
 
 const router = Router();
 router.use(protect);
 
-router.get('/', (req, res) => res.json({ success: true, data: [] }));
-router.get('/generate/:type', (req, res) => res.json({ success: true, data: {} }));
+router.get('/dashboard', getDashboardStats);
+router.get('/headcount', getHeadcountTrend);
 
 export default router;

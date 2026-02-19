@@ -67,6 +67,26 @@ const userSchema = new Schema<IUser>(
             type: Date,
             select: false,
         },
+        preferences: {
+            theme: {
+                type: String,
+                enum: ['light', 'dark', 'system'],
+                default: 'system',
+            },
+            sidebarExpanded: {
+                type: Boolean,
+                default: true,
+            },
+            notifications: {
+                email: { type: Boolean, default: true },
+                inApp: { type: Boolean, default: true },
+                leaves: { type: Boolean, default: true },
+                payroll: { type: Boolean, default: true },
+                attendance: { type: Boolean, default: false },
+                performance: { type: Boolean, default: true },
+                announcements: { type: Boolean, default: true },
+            },
+        },
     },
     {
         timestamps: true,
@@ -115,7 +135,7 @@ userSchema.methods.generateAuthToken = function (): string {
         },
         process.env.JWT_SECRET || 'default-secret',
         {
-            expiresIn: process.env.JWT_EXPIRE || '7d',
+            expiresIn: (process.env.JWT_EXPIRE || '7d') as any,
         }
     );
 };
@@ -128,7 +148,7 @@ userSchema.methods.generateRefreshToken = function (): string {
         },
         process.env.JWT_REFRESH_SECRET || 'default-refresh-secret',
         {
-            expiresIn: process.env.JWT_REFRESH_EXPIRE || '30d',
+            expiresIn: (process.env.JWT_REFRESH_EXPIRE || '30d') as any,
         }
     );
 };
