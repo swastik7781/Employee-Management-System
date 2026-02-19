@@ -95,9 +95,9 @@ Email: [any employee email from seed]
 Password: Employee@123
 
 Examples:
-- rajesh.sharma2@swastikindustries.com
-- priya.patel3@swastikindustries.com
-- amit.kumar4@swastikindustries.com
+- aditya.shah101@swastikindustries.com
+- rahul.iyer100@swastikindustries.com
+- nikhil.patel99@swastikindustries.com
 ```
 
 ---
